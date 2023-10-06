@@ -40,6 +40,14 @@ namespace OverlaySample.Droid.Renderers
         {
             base.OnElementChanged(e);
 
+
+            if (e.OldElement != null)
+            {
+                // Des-suscribir de eventos del elemento anterior
+                e.OldElement.OnCapture -= OnCaptureRequested;
+            }
+
+
             if (Control == null)
             {
                 cameraPreview = new NativeCameraPreview(Context);
@@ -84,12 +92,23 @@ namespace OverlaySample.Droid.Renderers
 
                    // LabelGeolocation.Text = "Error: " + ex;
                 }
-               
+
 
                 // Subscribe
+                e.NewElement.OnCapture += OnCaptureRequested;
                 cameraPreview.Click += OnCameraPreviewClicked;
             }
         }
+
+        private void OnCaptureRequested(object sender, EventArgs e)
+        {
+            cameraPreview?.Capture(data =>
+            {
+                // Aquí, "data" es tu imagen como un array de bytes.
+                // Puedes hacer lo que quieras con este dato.
+            });
+        }
+
 
         void OnCameraPreviewClicked(object sender, EventArgs e)
         {
@@ -113,5 +132,12 @@ namespace OverlaySample.Droid.Renderers
             }
             base.Dispose(disposing);
         }
+
+        public void Capture()
+        {
+            
+        }
+
+        public event EventHandler OnCapture;
     }
 }

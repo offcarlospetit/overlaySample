@@ -22,5 +22,16 @@ namespace OverlaySample.Controls
             get { return (CameraOptions)GetValue(CameraProperty); }
             set { SetValue(CameraProperty, value); }
         }
+
+        public void Capture()
+        {
+            Application.Current.MainPage.Dispatcher.BeginInvokeOnMainThread(() =>
+            {
+                // Invocar evento
+                OnCapture?.Invoke(this, EventArgs.Empty);
+            });
+        }
+
+        public event EventHandler OnCapture;
     }
 }

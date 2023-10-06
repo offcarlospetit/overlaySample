@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using OverlaySample.Controls;
 using Xamarin.Forms;
+using Plugin.Media;
+
 
 namespace OverlaySample
 {
@@ -51,5 +53,12 @@ namespace OverlaySample
                 cameraPreview.Camera = CameraOptions.Rear;
             }
         }
+
+
+        private void OnTakePhotoClicked(object sender, EventArgs e)
+        {
+            cameraPreview.Capture();
+        }
+
     }
 }

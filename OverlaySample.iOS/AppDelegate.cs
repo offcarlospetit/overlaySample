@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Plugin.Media;
 using UIKit;
 
 namespace OverlaySample.iOS
@@ -25,7 +26,7 @@ namespace OverlaySample.iOS
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
             LoadApplication(new App());
-
+            CrossMedia.Current.Initialize();
             return base.FinishedLaunching(app, options);
         }
     }

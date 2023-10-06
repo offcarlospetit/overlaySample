@@ -7,7 +7,7 @@ using Android.Views;
 
 namespace OverlaySample.Droid.Views
 {
-    public sealed class NativeCameraPreview : ViewGroup, ISurfaceHolderCallback
+    public sealed class NativeCameraPreview : ViewGroup, ISurfaceHolderCallback, Camera.IPictureCallback
     {
         SurfaceView surfaceView;
         ISurfaceHolder holder;
@@ -15,7 +15,7 @@ namespace OverlaySample.Droid.Views
         IList<Camera.Size> supportedPreviewSizes;
         Camera camera;
         IWindowManager windowManager;
-
+        private Action<byte[]> imageAvailableCallback;
         public bool IsPreviewing { get; set; }
 
         public Camera Preview
@@ -166,6 +166,26 @@ namespace OverlaySample.Droid.Views
             }
 
             return optimalSize;
+        }
+
+        public void Capture(Action<byte[]> imageAvailable)
+        {
+            if (camera != null)
+            {
+                imageAvailableCallback = imageAvailable;
+                camera.TakePicture(null, null, this);
+            }
+        }
+
+        public void OnPictureTaken(byte[] data, Camera camera)
+        {
+            imageAvailableCallback?.Invoke(data);
+            camera.StartPreview(); // Reiniciar la vista previa después de tomar la foto. la vista previa después de tomar la foto.
+        }
+
+        internal byte[] CaptureImage()
+        {
+            throw new NotImplementedException();
         }
     }
 }
