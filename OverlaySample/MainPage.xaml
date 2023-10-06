@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage BackgroundColor="Silver" 
+             xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:controls="clr-namespace:OverlaySample.Controls" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="OverlaySample.MainPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <controls:OverlayView Shape="Circle" Grid.Row="0" Grid.ColumnSpan="2" x:Name="overlayView"  OverlayOpacity="{Binding Path=Value, Source={x:Reference Name=slider3}}"  Scale="{Binding Path=Value, Source={x:Reference Name=slider2}}" HeightRequest="400" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"/>
+        <Label x:Name="label"  Grid.Row="0" Grid.ColumnSpan="2" Text="Xamarin Forms - Month of Love" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+           <Label.GestureRecognizers>
+             <TapGestureRecognizer Tapped="Handle_Tapped"/>
+           </Label.GestureRecognizers>
+        </Label>
+     
+     </Grid>
+  
+</ContentPage>

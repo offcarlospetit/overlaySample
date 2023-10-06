@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:OverlaySample.Controls"
+             x:Class="OverlaySample.CameraPage"  
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <controls:CameraPreview Grid.ColumnSpan="2" x:Name="cameraPreview" Camera="Rear" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+            <controls:OverlayView Grid.ColumnSpan="2" x:Name="overlayView"  OverlayOpacity="0.8"  Scale="1"    HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            <Label Text="Centra el documento aquí"
+       Grid.RowSpan="6" Grid.ColumnSpan="2"
+       VerticalOptions="Center"
+       HorizontalOptions="Center"
+       TextColor="White" 
+       FontSize="Large"
+       BackgroundColor="Transparent"/>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>
