@@ -12,6 +12,7 @@ namespace OverlaySample.iOS.Views
     {
         AVCaptureVideoPreviewLayer previewLayer;
         CameraOptions cameraOptions;
+        AVCaptureDevice camera;
 
         public event EventHandler<EventArgs> Tapped;
 
@@ -19,11 +20,23 @@ namespace OverlaySample.iOS.Views
 
         public bool IsPreviewing { get; set; }
 
+
+
         public NativeCameraPreview(CameraOptions options)
         {
             cameraOptions = options;
             IsPreviewing = false;
             Initialize();
+            camera = AVCaptureDevice.DefaultDeviceWithMediaType(AVMediaType.Video);
+            if (camera.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
+            {
+                camera.LockForConfiguration(out NSError error);
+                if (error == null)
+                {
+                    camera.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
+                    camera.UnlockForConfiguration();
+                }
+            }
         }
 
         public override void Draw(CGRect rect)
@@ -32,18 +45,41 @@ namespace OverlaySample.iOS.Views
             previewLayer.Frame = rect;
         }
 
-        public override void TouchesBegan(NSSet touches, UIEvent evt)
-        {
-            base.TouchesBegan(touches, evt);
-            OnTapped();
-        }
-
         protected virtual void OnTapped()
         {
             var eventHandler = Tapped;
             if (eventHandler != null)
             {
                 eventHandler(this, new EventArgs());
+            }
+        }
+
+        public override void TouchesBegan(NSSet touches, UIEvent evt)
+        {
+            base.TouchesBegan(touches, evt);
+            if (camera == null || !camera.IsFocusModeSupported(AVCaptureFocusMode.AutoFocus))
+                return;
+
+            var touch = touches.AnyObject as UITouch;
+            if (touch == null)
+                return;
+
+            var uiCameraPreviewLayer = new AVCaptureVideoPreviewLayer(CaptureSession);
+            var location = touch.LocationInView(this);
+            var convertedLocation = uiCameraPreviewLayer.CaptureDevicePointOfInterestForPoint(location);
+            ConfigureFocusAtPoint(convertedLocation);
+        }
+
+        private void ConfigureFocusAtPoint(CoreGraphics.CGPoint point)
+        {
+            if (camera.LockForConfiguration(out NSError error))
+            {
+                if (camera.FocusPointOfInterestSupported && camera.IsFocusModeSupported(AVCaptureFocusMode.AutoFocus))
+                {
+                    camera.FocusPointOfInterest = point;
+                    camera.FocusMode = AVCaptureFocusMode.AutoFocus;
+                }
+                camera.UnlockForConfiguration();
             }
         }
 

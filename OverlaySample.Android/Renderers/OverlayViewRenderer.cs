@@ -18,7 +18,7 @@ namespace OverlaySample.Droid.Renderers
 
         protected override void OnElementChanged(ElementChangedEventArgs<OverlayView> e)
         {
-            base.OnElementChanged(e);
+            base.OnElementChanged(e, Camera);
 
             if(Control == null)
             {

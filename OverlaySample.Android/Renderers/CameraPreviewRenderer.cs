@@ -20,6 +20,7 @@ namespace OverlaySample.Droid.Renderers
         {
         }
 
+        [Obsolete]
         public void OnAutoFocus(bool success, Camera camera)
         {
             var parameters = camera.GetParameters();
@@ -36,6 +37,7 @@ namespace OverlaySample.Droid.Renderers
             }
         }
 
+        [Obsolete]
         protected override async void OnElementChanged(ElementChangedEventArgs<CameraPreview> e)
         {
             base.OnElementChanged(e);

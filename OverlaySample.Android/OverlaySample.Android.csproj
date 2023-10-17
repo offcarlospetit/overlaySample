@@ -81,6 +81,7 @@
     <Compile Include="Renderers\CameraPreviewRenderer.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Services\CameraServies.cs" />
+    <Compile Include="Utilities\ImageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -119,6 +120,7 @@
     <Folder Include="Renderers\" />
     <Folder Include="Resources\xml\" />
     <Folder Include="Services\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OverlaySample\OverlaySample.csproj">

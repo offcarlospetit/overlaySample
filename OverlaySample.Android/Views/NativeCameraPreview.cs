@@ -28,6 +28,7 @@ namespace OverlaySample.Droid.Views
                 {
                     supportedPreviewSizes = Preview.GetParameters().SupportedPreviewSizes;
                     RequestLayout();
+                    SetCameraAutoFocus();
                 }
             }
         }
@@ -114,6 +115,7 @@ namespace OverlaySample.Droid.Views
 
                     Preview.SetParameters(parameters);
                     Preview.StartPreview();
+                    SetCameraAutoFocus();
                     IsPreviewing = true;
                 }
                 catch(Exception ex)
@@ -186,6 +188,21 @@ namespace OverlaySample.Droid.Views
         internal byte[] CaptureImage()
         {
             throw new NotImplementedException();
+        }
+
+        private void SetCameraAutoFocus()
+        {
+            if (camera == null)
+                return;
+
+            var parameters = camera.GetParameters();
+            var supportedFocusModes = parameters.SupportedFocusModes;
+
+            if (supportedFocusModes.Contains(Camera.Parameters.FocusModeContinuousPicture))
+            {
+                parameters.FocusMode = Camera.Parameters.FocusModeContinuousPicture;
+                camera.SetParameters(parameters);
+            }
         }
     }
 }
